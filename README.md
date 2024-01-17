@@ -4,6 +4,11 @@
 - [¿Qué es el problema de ruteo de vehículos?](#¿Qué-es-el-problema-de-ruteo-de-vehículos?)
 - [¿Descripción gráfica del problema de ruteo de vehículos](#Descripción-gráfica-del-problema-de-ruteo-de-vehículos)
 - [Alcance](#Alcance)
+- [Especificación de requisitos](#Especificación-de-requisitos)
+  - [Registro de casos o instancias](#Registro-de-casos-o-instancias)
+  - [Registro de usuarios](#Registro-de-usuarios)
+    - [Usuario estándar](#Usuario-estándar)
+    - [Usuario admin](#Usuario-admin)
   
 ***
 
@@ -29,3 +34,21 @@ Como se observa en la gráfica anterior, el **VRP** se puede representar geomét
 ### Alcance
 
 Esta aplicación está pensada para empresas de logística y/o organizaciones que necesiten de soluciones efectivas para casos de prueba pequeños y medianos. Se entiende que la capacidad del servidor es un factor importante al momento de consumir la API, y es por eso que la app no pretende extender funciones complejas a casos considerablemente complejos. **Routing_app** está pensada para funcionar como herramienta de comparación, estudio y uso de empresas de logística y organizaciones que la necesiten.
+
+***
+
+## Especificación de requisitos
+### 1. Registro de casos o instancias
+El cliente/usuario deberá proporcionar a la API un caso estructurado así:
+- Número de clientes
+- Lista de tipo tree map que almacenará en par key-value cada cliente, el depósito y la ubicación geográfica de estos. El ***key*** corresponderá a la identificación del cliente y depósito, mientras que ***value*** representará un arreglo bidimensional que almacenará las coordenadas de estos.
+
+**NOTA:** La primera posición del tree map deberá ser ocupada por el depósito, para así garantizar mejor identificación por parte del conjunto de algoritmos.
+
+### 2. Registro de usuarios 
+La API debe permitir la creación de usuarios bajo un único rol (de forma parcial ya que puede extenderse a otro tipo de usuarios como: universitarios, gubernamentales, etc.). El proceso de autorización se debe hacer por JWT. Adicionalmente, se debe garantizar un usuario **admin** para controlar los usuarios creados en la app. A continuación se presentan las acciones de cada rol:
+
+#### Usuario estándar
+Este tipo de rol garantiza un acceso global al conjunto de algoritmos básicos para la solución del ***VRP***. Adicionalmente, el usuario podrá registrar hasta 5 casos de análisis para así no hipersaturar el servidor. Con esto útimo concluimos que la relación de usuarios estándares y las instancias es de **1-m(one to many)**.
+#### Usuario admin
+Este rol podrá eliminar lógicamente los usuarios de la base de datos. 
